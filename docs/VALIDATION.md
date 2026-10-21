@@ -11,3 +11,7 @@ As of 2026-10-21, the most recent full local baseline has 159 checks: 18 BridgeS
 Still unverified: the 1.8.3 directory fix in actual installed Pro themes/DPI; every documented agent; arbitrary large/complex data, datum transformations and dense labels; aesthetic quality across all paper sizes; running after moving the checkout without rebuilding. Public export/rebuild/CI results are listed separately in release notes.
 
 Public Windows CI builds the Server and runs synthetic MCPIntegration checks. It does not install Esri software or emulate licensing. Full package checks and actual Pro validation require a licensed local/self-hosted environment. Never run untrusted pull requests in a privileged GIS host.
+
+首次公开副本测试暴露旧测试依赖开发者的长期保存/切换授权；已经将这两类模拟测试改为独立fixture和共享Server注册，公开默认仍关闭，不用放宽发布配置来通过测试。原失败及修复后的验证在发行说明区分；这不是替使用者授权。
+
+The first public-copy run exposed old tests depending on developer standing save/switch consent. These tests now use isolated fixtures and shared server registration, keeping public defaults closed. Release notes distinguish the failed attempt from subsequent validation; tests never grant permissions for an end user's GIS project.

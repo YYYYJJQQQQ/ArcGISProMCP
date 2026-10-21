@@ -20,3 +20,7 @@ Contracts contains SDK-free DTOs/validation; Transport handles discovery, limits
 Operations have IDs, durable receipts, terminal queries and explicit cooperative cancellation. A cancellation request can still finish successfully. Interrupted, failed and unknown are distinct. Resume reuses only proven outputs; uncertain writes are not automatically replayed. There is no cross-SDK transaction or general rollback.
 
 Humans own grants. Outputs use new paths; APRX saves require authorization, validation and backups. Public defaults disable standing save/switch consent and automatic cleanup and never inherit the author's workspace grants.
+
+ServerApplication复用官方注册和启动构建，生产入口仍只按用户配置读取授权；合成测试以DI注入独立授权，不提供生产CLI授权覆盖。测试启动器只接受ArcGISProMCP.Test.*管道及根内独立fixture，不能直接连实际Pro管道。
+
+ServerApplication shares official registration/startup construction. Production consent still comes from user-owned configuration; synthetic tests inject an isolated policy through DI, without adding a production CLI consent override. The test launcher accepts only ArcGISProMCP.Test.* pipes and dedicated fixture roots, not real Pro pipes.

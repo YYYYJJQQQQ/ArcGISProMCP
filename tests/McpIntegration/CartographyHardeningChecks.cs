@@ -103,7 +103,7 @@ internal static class CartographyHardeningChecks
         using var pipe = new BridgeService("ArcGISProMCP.Test.ProjectLifecycle." + id, handler: fixture); pipe.Start();
         string action = "decline"; int forms = 0;
         Task<McpClient> Connect(bool form, bool forceHuman = true) => McpClient.CreateAsync(new StdioClientTransport(new()
-        { Command = "dotnet", Arguments = new[] { serverPath, "--pipe-name", pipe.PipeName }.Concat(forceHuman ? new[] { "--require-project-confirmation" } : []).ToArray(), WorkingDirectory = root }), new McpClientOptions
+        { Command = "dotnet", Arguments = SyntheticConsentHost.Arguments(serverPath, pipe.PipeName, forceHuman ? ["--require-project-confirmation"] : []), WorkingDirectory = root }), new McpClientOptions
         {
             Capabilities = form ? new() { Elicitation = new() { Form = new() } } : new(),
             Handlers = form ? new() { ElicitationHandler = async (request, _) =>

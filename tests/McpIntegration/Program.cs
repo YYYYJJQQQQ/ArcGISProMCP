@@ -11,6 +11,24 @@ using ModelContextProtocol.Protocol;
 
 if (args.Length < 1) throw new ArgumentException("Supply the built MCP Server DLL path.");
 string serverPath = Path.GetFullPath(args[0]);
+if (args.Length >= 3 && args[1] == "--test-consent-host")
+{
+    string fixtureRoot = Path.GetFullPath(args[2]);
+    if (!WorkspaceAccessPolicy.IsInside(fixtureRoot, Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "logs", "synthetic-mcp-consent"))) throw new InvalidOperationException("Invalid synthetic consent root.");
+    WorkspaceAccessPolicy.CheckAncestors(fixtureRoot);
+    string[] hostArgs = args.Skip(3).ToArray();
+    int pipeArgument = Array.IndexOf(hostArgs, "--pipe-name");
+    if (hostArgs.Contains("--pro-process-id") || pipeArgument < 0 || pipeArgument + 1 >= hostArgs.Length || !hostArgs[pipeArgument + 1].StartsWith("ArcGISProMCP.Test.", StringComparison.Ordinal)) throw new InvalidOperationException("Synthetic consent host only accepts test fixture pipes.");
+    using var testHost = ServerApplication.Create(hostArgs, new ProjectSaveConsent(fixtureRoot, hostArgs.Contains("--require-save-confirmation"), hostArgs.Contains("--require-project-confirmation")));
+    await Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(testHost);
+    return;
+}
+if (args.Contains("--consent-checks-only"))
+{
+    int checks = await ReliabilityChecks.RunAsync(serverPath) + await CartographyHardeningChecks.RunAsync(serverPath);
+    Console.WriteLine($"Completed: {checks} isolated consent and cartography checks passed.");
+    return;
+}
 if (args.Contains("--workspace-settings-only"))
 {
     Console.WriteLine($"Completed: {WorkspaceSettingsChecks.Run() + WorkspaceSettingsPreview.Run()} workspace-settings checks passed (isolated configurations and synthetic WPF host).");

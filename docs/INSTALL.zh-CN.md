@@ -19,7 +19,7 @@
 3. 参考 Agent 文档，添加 `artifacts/publish/staging/ArcGISProMCP.Server/ArcGISProMCP.Server.exe` 的绝对路径。不要覆盖已有MCP配置，包括QGIS。
 4. 在 Agent 中调用 health_check、get_current_project、list_maps。核对组件版本、phase1Ready～phase4Ready和hardeningReady，再取得实际URI。多个Pro实例使用明确processId。
 
-公开配置默认没有外部目录权限，保存/切换长期授权关闭，自动删除备份关闭。TestProjects的默认范围仍存在。本人在目录授权窗口配置需要的目录再保存。不要复制开发者的长期授权或自动清理许可。长期保存/切换须本人审阅config/project-save.json后主动设置；不支持人工表单的客户端在未授权时应拒绝，而非默认同意。
+公开配置默认没有外部目录权限，保存/切换长期授权关闭，自动删除备份关闭。TestProjects的默认范围仍存在。本人在目录授权窗口配置需要的目录再保存。不要复制开发者的长期授权或自动清理许可。仓库只跟踪config/*.example.json；需要配置文件时复制对应示例为不带.example的新文件，保留自己的已有配置。长期保存/切换须本人审阅config/project-save.json后主动设置；不支持人工表单的客户端在未授权时应拒绝，而非默认同意。
 
 ## 升级与回滚
 

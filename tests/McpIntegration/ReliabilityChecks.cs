@@ -45,7 +45,7 @@ internal static class ReliabilityChecks
         var fixture = new Fixture();
         using var pipe = new BridgeService("ArcGISProMCP.Test.Reliability." + Guid.NewGuid().ToString("N"), handler: fixture); pipe.Start();
         Task<McpClient> Connect(bool form, bool forceHuman = true) => McpClient.CreateAsync(new StdioClientTransport(new()
-        { Command = "dotnet", Arguments = new[] { serverPath, "--pipe-name", pipe.PipeName }.Concat(forceHuman ? new[] { "--require-save-confirmation" } : []).ToArray(), WorkingDirectory = Directory.GetCurrentDirectory() }), new McpClientOptions
+        { Command = "dotnet", Arguments = SyntheticConsentHost.Arguments(serverPath, pipe.PipeName, forceHuman ? ["--require-save-confirmation"] : []), WorkingDirectory = Directory.GetCurrentDirectory() }), new McpClientOptions
         {
             Capabilities = form ? new() { Elicitation = new() { Form = new() } } : new(),
             Handlers = form ? new() { ElicitationHandler = async (request, _) =>
