@@ -79,11 +79,13 @@ def export(destination):
                 copy(source, source.relative_to(ROOT))
     for name in ["build.ps1", "publish-server.ps1", "audit-dependencies.ps1", "export-open-source.py"]:
         copy(ROOT / "scripts" / name, "scripts/" + name)
-    for source in (ROOT / "docs" / "public").glob("*.md"):
-        name = source.name
-        copy(source, name if name in {"README.md", "README.en.md", "CONTRIBUTING.md", "SECURITY.md", "THIRD_PARTY_NOTICES.md"} else "docs/" + name)
-        # Retain authoring copies so another maintainer can rerun the exporter.
-        copy(source, "docs/public/" + name)
+    root_docs = {"README.md", "README.en.md", "CONTRIBUTING.md", "SECURITY.md", "THIRD_PARTY_NOTICES.md"}
+    doc_names = [*sorted(root_docs), "INSTALL.zh-CN.md", "INSTALL.en.md", "AGENTS.zh-CN.md", "AGENTS.en.md", "MAINTENANCE.md", "ARCHITECTURE.md", "VALIDATION.md"]
+    for name in doc_names:
+        relative = name if name in root_docs else "docs/" + name
+        authoring = ROOT / "docs" / "public" / name
+        source = authoring if authoring.exists() else ROOT / relative
+        copy(source, relative)
     for folder in ["Images", "DarkImages"]:
         for size in [16, 32]:
             (destination / "ArcGISProMCP.AddIn" / folder / f"AddInDesktop{size}.png").write_bytes(icon(size))
