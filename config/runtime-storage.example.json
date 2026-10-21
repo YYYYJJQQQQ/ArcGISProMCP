@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "backupKeepPerProject": 10,
+  "backupMaxBytes": 536870912,
+  "autoPrune": false
+}

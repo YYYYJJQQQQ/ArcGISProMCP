@@ -1,0 +1,15 @@
+<Solution>
+  <Project Path="ArcGISProMCP.AddIn/ArcGISProMCP.AddIn.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/ArcGISProMCP.Contracts/ArcGISProMCP.Contracts.csproj" />
+    <Project Path="src/ArcGISProMCP.Transport/ArcGISProMCP.Transport.csproj" />
+    <Project Path="src/ArcGISProMCP.Server/ArcGISProMCP.Server.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BridgeSmoke/BridgeSmoke.csproj" />
+    <Project Path="tests/McpIntegration/McpIntegration.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/ArcGISProMCP.Probe/ArcGISProMCP.Probe.csproj" />
+  </Folder>
+</Solution>

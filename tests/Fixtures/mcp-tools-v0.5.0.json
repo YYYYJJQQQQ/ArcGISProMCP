@@ -1,0 +1,3582 @@
+{
+  "sourceVersion": "0.5.0",
+  "tools": [
+    {
+      "name": "create_thematic_layout",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUris": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "paper": {
+            "type": "string",
+            "default": "A4"
+          },
+          "orientation": {
+            "type": "string",
+            "default": "LANDSCAPE"
+          },
+          "template": {
+            "type": "string",
+            "default": "SIDEBAR"
+          },
+          "renderer": {
+            "type": "string",
+            "default": "PRESERVE"
+          },
+          "themeField": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "classCount": {
+            "type": "integer",
+            "default": 5
+          },
+          "startColor": {
+            "type": "string",
+            "default": "#E8F0FE"
+          },
+          "endColor": {
+            "type": "string",
+            "default": "#174A8B"
+          },
+          "sourceText": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "includeGrid": {
+            "type": "boolean",
+            "default": true
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          },
+          "options": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "title": {
+                "type": "boolean"
+              },
+              "subtitle": {
+                "type": "boolean"
+              },
+              "legend": {
+                "type": "boolean"
+              },
+              "scaleBar": {
+                "type": "boolean"
+              },
+              "northArrow": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "boolean"
+              },
+              "coordinateSystem": {
+                "type": "boolean"
+              },
+              "minimumFontSize": {
+                "type": "number"
+              },
+              "scaleRounding": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "bounds": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ]
+                }
+              }
+            },
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUris",
+          "name",
+          "title"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_workflow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "workflowId": {
+            "type": "string"
+          },
+          "stepId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "waitSeconds": {
+            "type": "integer",
+            "default": 0
+          }
+        },
+        "required": [
+          "workflowId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "set_graduated_colors_renderer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
+          "classCount": {
+            "type": "integer",
+            "default": 5
+          },
+          "method": {
+            "type": "string",
+            "default": "natural_breaks"
+          },
+          "colors": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "field"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "zoom_to_layer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "list_layers",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mapUri": {
+            "description": "Stable map URI returned by list_maps. Omit only when an active map exists.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "offset": {
+            "description": "Zero-based offset, must be nonnegative.",
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "description": "Page size from 1 to 200.",
+            "type": "integer",
+            "default": 100
+          },
+          "processId": {
+            "description": "Optional target ArcGIS Pro process ID.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "spatial_join_analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "targetLayerUri": {
+            "type": "string"
+          },
+          "joinLayerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string",
+            "default": "INTERSECT"
+          },
+          "joinOperation": {
+            "type": "string",
+            "default": "JOIN_ONE_TO_ONE"
+          },
+          "keepAll": {
+            "type": "boolean",
+            "default": true
+          },
+          "distance": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "distanceUnit": {
+            "type": "string",
+            "default": "Meters"
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "targetLayerUri",
+          "joinLayerUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "validate_workflow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "type": "object",
+            "properties": {
+              "workflowId": {
+                "type": "string"
+              },
+              "projectPath": {
+                "type": "string"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "tool": {
+                      "type": "string"
+                    },
+                    "arguments": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "tool",
+                    "arguments"
+                  ]
+                }
+              },
+              "processId": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "default": null
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "default": 900
+              }
+            },
+            "required": [
+              "workflowId",
+              "projectPath",
+              "steps"
+            ]
+          }
+        },
+        "required": [
+          "plan"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "clip_analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "inputLayerUri": {
+            "type": "string"
+          },
+          "clipLayerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "outputWkid": {
+            "type": "integer",
+            "default": 0
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "inputLayerUri",
+          "clipLayerUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "set_line_width",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "width": {
+            "type": "number"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "width"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_map_frame",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "extent": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "number"
+            },
+            "default": null
+          },
+          "wkid": {
+            "type": "integer",
+            "default": 4326
+          },
+          "scale": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapUri",
+          "name",
+          "bounds"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "set_layer_visibility",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "visible": {
+            "type": "boolean"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "visible"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "save_layout_template",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "import_layout_template",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "templatePath": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "templatePath",
+          "name"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "remove_layer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID; retain the same value for uncertain retries.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_layout",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "layoutUri": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "layoutUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "calculate_geometry",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "geometryProperties": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "method": {
+            "type": "string",
+            "default": "GEODESIC"
+          },
+          "areaUnit": {
+            "type": "string",
+            "default": "SQUARE_METERS"
+          },
+          "distanceUnit": {
+            "type": "string",
+            "default": "Meters"
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "activate_map",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "dissolve_analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "fields": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "statistics": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "multiPart": {
+            "type": "boolean",
+            "default": true
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "update_layout_page",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "paper": {
+            "type": "string",
+            "default": "A4"
+          },
+          "orientation": {
+            "type": "string",
+            "default": "LANDSCAPE"
+          },
+          "widthCm": {
+            "type": "number",
+            "default": 0
+          },
+          "heightCm": {
+            "type": "number",
+            "default": 0
+          },
+          "scaleElements": {
+            "type": "boolean",
+            "default": false
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "intersect_analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "inputLayerUris": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "joinAttributes": {
+            "type": "string",
+            "default": "ALL"
+          },
+          "outputType": {
+            "type": "string",
+            "default": "INPUT"
+          },
+          "outputWkid": {
+            "type": "integer",
+            "default": 0
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "inputLayerUris",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "export_map_series",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "dpi": {
+            "type": "integer",
+            "default": 300
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_layout_grid",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapFrameName": {
+            "type": "string"
+          },
+          "styleName": {
+            "type": "string",
+            "default": ""
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapFrameName"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_map_series",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "layoutUri": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "layoutUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "retry_analysis_job",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "projectPath": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "jobId",
+          "projectPath",
+          "operationId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_layout_north_arrow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapFrameName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "styleName": {
+            "type": "string",
+            "default": ""
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapFrameName",
+          "name",
+          "bounds"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_layout_legend",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapFrameName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "default": "图例"
+          },
+          "layerUris": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "fontSize": {
+            "type": "number",
+            "default": 9
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapFrameName",
+          "name",
+          "bounds"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "union_analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "inputLayerUris": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "joinAttributes": {
+            "type": "string",
+            "default": "ALL"
+          },
+          "outputWkid": {
+            "type": "integer",
+            "default": 0
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "inputLayerUris",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_analysis_job",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "list_maps",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "description": "Zero-based offset, must be nonnegative.",
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "description": "Page size from 1 to 200.",
+            "type": "integer",
+            "default": 100
+          },
+          "processId": {
+            "description": "Optional target ArcGIS Pro process ID.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "cancel_layout_job",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "resume_workflow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "workflowId": {
+            "type": "string"
+          },
+          "newWorkflowId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflowId",
+          "newWorkflowId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "set_layout_element",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "elementName": {
+            "type": "string"
+          },
+          "bounds": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "default": null
+          },
+          "text": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "fontSize": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "fontName": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "color": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "rotation": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "visible": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "default": null
+          },
+          "styleName": {
+            "type": "string",
+            "default": ""
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "elementName"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "zoom_to_extent",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "extent": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "wkid": {
+            "type": "integer",
+            "default": 4326
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "extent"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "batch_export_layouts",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "layoutUri": {
+                  "type": "string"
+                },
+                "outputPath": {
+                  "type": "string"
+                },
+                "mapFrameName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "extent": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "wkid": {
+                  "type": "integer"
+                },
+                "scale": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "titleElementName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "format": {
+            "type": "string",
+            "default": "PDF"
+          },
+          "dpi": {
+            "type": "integer",
+            "default": 300
+          },
+          "embedFonts": {
+            "type": "boolean",
+            "default": true
+          },
+          "geoReference": {
+            "type": "boolean",
+            "default": true
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "pages"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "set_layer_transparency",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "transparency": {
+            "type": "number"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "transparency"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "list_pro_instances",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "set_symbol_color",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "color"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_layout_scale_bar",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapFrameName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "default": "Kilometers"
+          },
+          "styleName": {
+            "type": "string",
+            "default": ""
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapFrameName",
+          "name",
+          "bounds"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_layer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "index": {
+            "type": "integer",
+            "default": 0
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "source"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_layer_properties",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "mapUri",
+          "layerUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "cancel_analysis_job",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "run_workflow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "type": "object",
+            "properties": {
+              "workflowId": {
+                "type": "string"
+              },
+              "projectPath": {
+                "type": "string"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "tool": {
+                      "type": "string"
+                    },
+                    "arguments": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "tool",
+                    "arguments"
+                  ]
+                }
+              },
+              "processId": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "default": null
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "default": 900
+              }
+            },
+            "required": [
+              "workflowId",
+              "projectPath",
+              "steps"
+            ]
+          }
+        },
+        "required": [
+          "plan"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "add_layout_text",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bounds": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "fontSize": {
+            "type": "number",
+            "default": 12
+          },
+          "fontName": {
+            "type": "string",
+            "default": "Microsoft YaHei"
+          },
+          "color": {
+            "type": "string",
+            "default": "#243247"
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "name",
+          "bounds",
+          "text"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_layout_job",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "set_map_frame_view",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapFrameName": {
+            "type": "string"
+          },
+          "extent": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "number"
+            },
+            "default": null
+          },
+          "wkid": {
+            "type": "integer",
+            "default": 4326
+          },
+          "layerUri": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "scale": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "heading": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "mapUri": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapFrameName"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "analysis_environment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "resume_layout_job",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "projectPath": {
+            "type": "string"
+          },
+          "operationId": {
+            "type": "string"
+          },
+          "outputPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "jobId",
+          "projectPath",
+          "operationId",
+          "outputPaths"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "list_layout_styles",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "default": "all"
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "get_current_project",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "processId": {
+            "description": "Optional target ArcGIS Pro process ID.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "convert_features",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "default": "FEATURE_CLASS"
+          },
+          "whereClause": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "outputWkid": {
+            "type": "integer",
+            "default": 0
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "project_features",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "outputWkid": {
+            "type": "integer"
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "outputPath",
+          "outputWkid"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "configure_map_series",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "mapFrameName": {
+            "type": "string"
+          },
+          "indexLayerUri": {
+            "type": "string"
+          },
+          "pageNameField": {
+            "type": "string"
+          },
+          "sortField": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "sortAscending": {
+            "type": "boolean",
+            "default": true
+          },
+          "marginCm": {
+            "type": "number",
+            "default": 0.5
+          },
+          "scaleRounding": {
+            "type": "number",
+            "default": 1000
+          },
+          "replaceExisting": {
+            "type": "boolean",
+            "default": false
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "mapFrameName",
+          "indexLayerUri",
+          "pageNameField"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "buffer_analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "distance": {
+            "type": "number"
+          },
+          "distanceUnit": {
+            "type": "string",
+            "default": "Meters"
+          },
+          "method": {
+            "type": "string",
+            "default": "GEODESIC"
+          },
+          "dissolveOption": {
+            "type": "string",
+            "default": "NONE"
+          },
+          "dissolveFields": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "outputWkid": {
+            "type": "integer",
+            "default": 0
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "outputPath",
+          "distance"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "list_layouts",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "type": "integer",
+            "default": 100
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "select_by_location",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "inputLayerUri": {
+            "type": "string"
+          },
+          "selectingLayerUri": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string",
+            "default": "INTERSECT"
+          },
+          "selectionType": {
+            "type": "string",
+            "default": "NEW_SELECTION"
+          },
+          "invert": {
+            "type": "boolean",
+            "default": false
+          },
+          "distance": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "distanceUnit": {
+            "type": "string",
+            "default": "Meters"
+          },
+          "outputPath": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "inputLayerUri",
+          "selectingLayerUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "query_attributes",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "whereClause": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "fields": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "offset": {
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "type": "integer",
+            "default": 100
+          },
+          "outputPath": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "move_layer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "index"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "calculate_distance",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "inputLayerUri": {
+            "type": "string"
+          },
+          "nearLayerUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "closestCount": {
+            "type": "integer",
+            "default": 1
+          },
+          "distance": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "default": null
+          },
+          "distanceUnit": {
+            "type": "string",
+            "default": "Meters"
+          },
+          "method": {
+            "type": "string",
+            "default": "GEODESIC"
+          },
+          "geographicTransformation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "inputLayerUri",
+          "nearLayerUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "cancel_workflow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "workflowId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflowId"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "export_layout",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "layoutUri": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "default": "PDF"
+          },
+          "dpi": {
+            "type": "integer",
+            "default": 300
+          },
+          "embedFonts": {
+            "type": "boolean",
+            "default": true
+          },
+          "geoReference": {
+            "type": "boolean",
+            "default": true
+          },
+          "mapFrameName": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "layoutUri",
+          "outputPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "get_workspace_access",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "health_check",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "processId": {
+            "description": "Optional target ArcGIS Pro process ID; required when multiple instances are running.",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        }
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "create_layout",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "paper": {
+            "type": "string",
+            "default": "A4"
+          },
+          "orientation": {
+            "type": "string",
+            "default": "LANDSCAPE"
+          },
+          "widthCm": {
+            "type": "number",
+            "default": 0
+          },
+          "heightCm": {
+            "type": "number",
+            "default": 0
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "name"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "rename_layer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "name"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "save_project",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "operationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    },
+    {
+      "name": "set_unique_value_renderer",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "projectPath": {
+            "type": "string"
+          },
+          "mapUri": {
+            "type": "string"
+          },
+          "layerUri": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
+          "colors": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "default": null
+          },
+          "operationId": {
+            "description": "Optional 32-hex GUID. Reuse the same ID and identical arguments for retries within 10 minutes.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "processId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "projectPath",
+          "mapUri",
+          "layerUri",
+          "field"
+        ]
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false
+      }
+    }
+  ]
+}

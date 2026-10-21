@@ -1,0 +1,14 @@
+artifacts/
+**/bin/
+**/obj/
+**/__pycache__/
+.vs/
+.codex/
+TestProjects/
+Workspaces/
+config/workspace-access.json
+config/project-save.json
+config/runtime-storage.json
+*.user
+*.suo
+.env

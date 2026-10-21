@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "arcgispro": {
+      "type": "stdio",
+      "command": "D:\\Tools\\ArcGISProMCP\\artifacts\\publish\\staging\\ArcGISProMCP.Server\\ArcGISProMCP.Server.exe",
+      "args": []
+    }
+  }
+}

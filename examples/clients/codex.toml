@@ -1,0 +1,5 @@
+[mcp_servers.arcgispro]
+command = 'D:\Tools\ArcGISProMCP\artifacts\publish\staging\ArcGISProMCP.Server\ArcGISProMCP.Server.exe'
+args = []
+startup_timeout_sec = 20
+tool_timeout_sec = 150

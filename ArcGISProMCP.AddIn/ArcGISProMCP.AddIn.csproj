@@ -1,0 +1,109 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <NoWarn>CA1416</NoWarn>
+    <Version>1.8.3</Version>
+    <!-- Default builds package locally. Deployment is an explicit, separate choice. -->
+    <ArcGISMcpBuildMode Condition="'$(ArcGISMcpBuildMode)' == ''">PackageOnly</ArcGISMcpBuildMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyMetadata Include="ArcGISMcpWorkspaceRoot" Value="$(McpWorkspaceRoot)" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Config.daml" />
+    <ProjectReference Include="..\src\ArcGISProMCP.Transport\ArcGISProMCP.Transport.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config.daml" />    
+    <Content Include="Images\AddInDesktop16.png" />
+    <Content Include="Images\AddInDesktop32.png" />
+    <Content Include="DarkImages\AddInDesktop16.png" />
+    <Content Include="DarkImages\AddInDesktop32.png" />    
+  </ItemGroup>
+  <ItemGroup>
+
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ArcGIS.Desktop.Framework">
+      <HintPath>$(ArcGISProInstallDir)\bin\ArcGIS.Desktop.Framework.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Core">
+      <HintPath>$(ArcGISProInstallDir)\bin\ArcGIS.Core.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Core">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\Core\ArcGIS.Desktop.Core.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Mapping">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\Mapping\ArcGIS.Desktop.Mapping.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Catalog">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\Catalog\ArcGIS.Desktop.Catalog.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Editing">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\Editing\ArcGIS.Desktop.Editing.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Extensions">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\DesktopExtensions\ArcGIS.Desktop.Extensions.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.GeoProcessing">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\GeoProcessing\ArcGIS.Desktop.GeoProcessing.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Layouts">
+      <HintPath>$(ArcGISProInstallDir)\bin\Extensions\Layout\ArcGIS.Desktop.Layouts.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+	<Reference Include="ArcGIS.Desktop.KnowledgeGraph">
+		<HintPath>$(ArcGISProInstallDir)\bin\Extensions\KnowledgeGraph\ArcGIS.Desktop.KnowledgeGraph.dll</HintPath>
+		<CopyLocal>False</CopyLocal>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="ArcGIS.Desktop.Shared.Wpf">
+        <HintPath>$(ArcGISProInstallDir)\bin\ArcGIS.Desktop.Shared.Wpf.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+        <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Ribbon.Wpf">
+      <HintPath>$(ArcGISProInstallDir)\bin\ArcGIS.Desktop.Ribbon.Wpf.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.DataGrid.Contrib.Wpf">
+      <HintPath>$(ArcGISProInstallDir)\bin\ArcGIS.Desktop.DataGrid.Contrib.Wpf.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Resources">
+      <HintPath>$(ArcGISProInstallDir)\bin\ArcGIS.Desktop.Resources.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ItemIndex">
+      <HintPath>$(ArcGISProInstallDir)\bin\ESRI.ArcGIS.ItemIndex.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+   <Import Project="$(ArcGISProInstallDir)\bin\Esri.ProApp.SDK.Desktop.targets" Condition="'$(ArcGISMcpBuildMode)' != 'CompileOnly' AND Exists('$(ArcGISProInstallDir)\bin\Esri.ProApp.SDK.Desktop.targets') AND !Exists('Esri.ArcGISPro.Extensions.targets')" />
+   <Import Project="build\ArcGISMcp.Build.targets" />
+</Project>

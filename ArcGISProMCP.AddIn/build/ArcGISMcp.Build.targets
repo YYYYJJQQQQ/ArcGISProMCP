@@ -1,0 +1,40 @@
+<Project>
+  <Target Name="ValidateArcGISMcpBuildMode" BeforeTargets="PrepareForBuild;Clean">
+    <Error Condition="'$(ArcGISMcpBuildMode)' != 'CompileOnly' AND '$(ArcGISMcpBuildMode)' != 'PackageOnly' AND '$(ArcGISMcpBuildMode)' != 'Deploy'"
+           Text="ArcGISMcpBuildMode must be CompileOnly, PackageOnly or Deploy." />
+    <Error Condition="'$(ArcGISMcpBuildMode)' != 'CompileOnly' AND !Exists('$(ArcGISProInstallDir)\bin\Esri.ProApp.SDK.Desktop.targets')"
+           Text="ArcGIS SDK packaging targets were not found. Use CompileOnly for compilation only." />
+  </Target>
+
+  <!-- Overrides only this project's imported SDK target. SDK installation stays untouched. -->
+  <Target Name="PackageArcGISContents" AfterTargets="ArcGISInstallOutput"
+          Condition="'$(ArcGISMcpBuildMode)' != 'CompileOnly'">
+    <PropertyGroup>
+      <McpStagingPath>$(IntermediateOutputPath)mcp-package\$([System.Guid]::NewGuid())\</McpStagingPath>
+    </PropertyGroup>
+    <Copy SourceFiles="@(ConfigBinaries->'$(OutDir)%(Identity)')"
+          DestinationFolder="$(McpStagingPath)Install\%(RelativeDir)" />
+    <Copy SourceFiles="@(Content)"
+          Condition="'%(Content.Link)' == '' AND ('%(Content.CopyToOutputDirectory)' == 'Never' OR '%(Content.CopyToOutputDirectory)' == '')"
+          DestinationFolder="$(McpStagingPath)%(RelativeDir)" />
+    <Copy SourceFiles="@(Content)"
+          Condition="'%(Content.Link)' != '' AND ('%(Content.CopyToOutputDirectory)' == 'Never' OR '%(Content.CopyToOutputDirectory)' == '')"
+          DestinationFiles="$(McpStagingPath)%(Content.Link)" />
+    <PackageAddIn ZipIntermediatePath="$(McpStagingPath)" PackageType="$(PackageType)"
+                  TargetFolder="$(OutDir)" TargetFileName="$(TargetFileName)" RootNamespace="$(RootNamespace)">
+      <Output TaskParameter="PackageOutputPath" PropertyName="PackageFile" />
+    </PackageAddIn>
+    <Error Condition="'$(PackageFile)' == '' OR !Exists('$(PackageFile)')" Text="Add-in package was not produced." />
+    <Message Importance="High" Text="Package created locally: $(PackageFile). Mode: $(ArcGISMcpBuildMode)." />
+    <Error Condition="'$(ArcGISMcpBuildMode)' == 'Deploy' AND !Exists('$(ArcGISFolder)\RegisterAddIn.exe')"
+           Text="RegisterAddIn.exe was not found." />
+    <!-- Fail the build if registration fails, rather than reporting a successful deployment. -->
+    <Exec Condition="'$(ArcGISMcpBuildMode)' == 'Deploy'" WorkingDirectory="$(ArcGISFolder)"
+          Command="&quot;$(ArcGISFolder)\RegisterAddIn.exe&quot; &quot;$(PackageFile)&quot; /s" />
+  </Target>
+
+  <!-- Clean never unregisters installed add-ins, even after an explicit Deploy build. -->
+  <Target Name="CleanArcGISContents" AfterTargets="Clean">
+    <Message Importance="High" Text="Clean is local only; installed add-ins are not unregistered." />
+  </Target>
+</Project>
