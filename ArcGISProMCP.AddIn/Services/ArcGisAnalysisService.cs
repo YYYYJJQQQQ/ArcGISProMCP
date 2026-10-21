@@ -16,8 +16,7 @@ namespace ArcGISProMCP.AddIn.Services;
 
 internal sealed class ArcGisAnalysisService : IDisposable
 {
-    private readonly string _root = typeof(ArcGisAnalysisService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-        .Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private readonly string _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisAnalysisService).Assembly);
     private readonly AnalysisJobs _jobs = new();
 
     internal async Task<object> ExecuteAsync(string command, JsonElement? arguments, CancellationToken token)

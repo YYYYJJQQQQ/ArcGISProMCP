@@ -6,12 +6,12 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <NoWarn>CA1416</NoWarn>
-    <Version>1.8.3</Version>
+    <Version>1.9.0</Version>
     <!-- Default builds package locally. Deployment is an explicit, separate choice. -->
     <ArcGISMcpBuildMode Condition="'$(ArcGISMcpBuildMode)' == ''">PackageOnly</ArcGISMcpBuildMode>
   </PropertyGroup>
   <ItemGroup>
-    <AssemblyMetadata Include="ArcGISMcpWorkspaceRoot" Value="$(McpWorkspaceRoot)" />
+    <AssemblyMetadata Include="ArcGISMcpWorkspaceRoot" Condition="'$(ArcGISMcpPortable)' != 'true'" Value="$(McpWorkspaceRoot)" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Config.daml" />

@@ -129,7 +129,7 @@ public sealed class WorkspaceAccessPolicy
             Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
             Path.Combine(profile, ".codex"), Path.Combine(profile, ".ssh"), Path.Combine(profile, ".aws"), Path.Combine(profile, ".azure"), Path.Combine(profile, ".kube"), Path.Combine(profile, ".gnupg"), Path.Combine(profile, "AppData"), Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"F:\ArcGISpro",
             Path.Combine(_root, "src"), Path.Combine(_root, "config"), Path.Combine(_root, ".codex"), Path.Combine(_root, "python"),
-            Path.Combine(_root, "ArcGISProMCP.AddIn"), Path.Combine(_root, "artifacts"), Path.Combine(_root, "docs"), Path.Combine(_root, "tests"), Path.Combine(_root, "scripts"), Path.Combine(_root, "tools"), Path.Combine(_root, ".git"), Path.Combine(_root, ".vs")];
+            Path.Combine(_root, "ArcGISProMCP.AddIn"), Path.Combine(_root, "server"), Path.Combine(_root, "addin"), Path.Combine(_root, "client-config"), Path.Combine(_root, "artifacts"), Path.Combine(_root, "docs"), Path.Combine(_root, "tests"), Path.Combine(_root, "scripts"), Path.Combine(_root, "tools"), Path.Combine(_root, ".git"), Path.Combine(_root, ".vs")];
         if (protectedPaths.Where(p => !string.IsNullOrEmpty(p)).Any(p => IsInside(path, p)))
             throw new BridgeException(code, "系统、安装、配置、源码或运行日志目录不能授权为 GIS 数据目录。");
     }

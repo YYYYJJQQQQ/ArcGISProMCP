@@ -23,7 +23,7 @@ internal static class ThematicComposition
             ?? throw new BridgeException("unsupported_layer", "专题排版只复制明确选择的普通要素图层，不复制数据。")).ToArray();
         foreach (var layer in layers)
         {
-            string root = typeof(ThematicComposition).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+            string root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ThematicComposition).Assembly);
             var sourcePath = layer.GetPath(); if (sourcePath?.IsFile == true) new WorkspaceAccessPolicy(root).Require(sourcePath.LocalPath, "read", "data", "source_scope_denied");
             if (!LayerFactory.Instance.CanCopyLayer(layer)) throw new BridgeException("unsupported_layer", "SDK 不能复制所选图层。");
             using var featureClass = layer.GetFeatureClass(); using var definition = featureClass.GetDefinition();

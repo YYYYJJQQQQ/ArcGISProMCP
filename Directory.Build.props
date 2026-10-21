@@ -3,8 +3,10 @@
     <McpWorkspaceRoot>$(MSBuildThisFileDirectory)</McpWorkspaceRoot>
     <ArcGISProInstallDir Condition="'$(ArcGISProInstallDir)' == '' AND Exists('F:\ArcGISpro\bin\ArcGISPro.exe')">F:\ArcGISpro</ArcGISProInstallDir>
     <ArcGISProInstallDir Condition="'$(ArcGISProInstallDir)' == ''">$(ProgramW6432)\ArcGIS\Pro</ArcGISProInstallDir>
-    <BaseOutputPath>$(McpWorkspaceRoot)artifacts\bin\$(MSBuildProjectName)\</BaseOutputPath>
-    <BaseIntermediateOutputPath>$(McpWorkspaceRoot)artifacts\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <McpArtifactRoot>$(McpWorkspaceRoot)artifacts\</McpArtifactRoot>
+    <McpArtifactRoot Condition="'$(McpBuildFlavor)' != ''">$(McpWorkspaceRoot)artifacts\$(McpBuildFlavor)\</McpArtifactRoot>
+    <BaseOutputPath>$(McpArtifactRoot)bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(McpArtifactRoot)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <RestorePackagesPath>$(McpWorkspaceRoot)artifacts\cache\nuget\packages\</RestorePackagesPath>
     <!-- Exclude legacy template outputs after relocating bin/obj. -->
     <DefaultItemExcludes>$(DefaultItemExcludes);**\bin\**;**\obj\**</DefaultItemExcludes>

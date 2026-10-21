@@ -12,6 +12,30 @@ using ModelContextProtocol.Protocol;
 
 if (args.Length < 1) throw new ArgumentException("Supply the built MCP Server DLL path.");
 string serverPath = Path.GetFullPath(args[0]);
+if (args.Contains("--installed-server-only"))
+{
+    using var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(40));
+    string installedPipe = "ArcGISProMCP.Test.Portable." + Guid.NewGuid().ToString("N");
+    using var installedBridge = new BridgeService(installedPipe, handler: new SnapshotFixture());
+    installedBridge.Start();
+    await using var installedClient = await McpClient.CreateAsync(new StdioClientTransport(new()
+    {
+        Command = serverPath,
+        Arguments = ["--pipe-name", installedPipe],
+        WorkingDirectory = Directory.GetCurrentDirectory(),
+        StandardErrorLines = line => Console.Error.WriteLine(line)
+    }), cancellationToken: deadline.Token);
+    var installedTools = await installedClient.ListToolsAsync(cancellationToken: deadline.Token);
+    if (installedTools.Count != WorkflowProtocol.TotalMcpTools) throw new Exception("Installed tool list mismatch.");
+    var result = await installedClient.CallToolAsync("health_check", cancellationToken: deadline.Token);
+    var status = result.StructuredContent ?? throw new Exception("No installed health snapshot.");
+    if (result.IsError == true || !status.GetProperty("serverReady").GetBoolean() || status.GetProperty("serverVersion").GetString() != ReleaseIdentity.ServerVersion ||
+        status.GetProperty("projectSavePolicy").GetProperty("autonomousSaveAllowed").GetBoolean()) throw new Exception("Installed server/default consent check failed.");
+    string root = Path.GetDirectoryName(Path.GetDirectoryName(serverPath))!;
+    if (status.GetProperty("storagePolicy").GetProperty("logDirectory").GetString() != Path.Combine(root, "artifacts", "logs", "project-saves")) throw new Exception("Installed server used the wrong root.");
+    Console.WriteLine("PASS installed executable: real stdio initialize, 78 tools, health_check, safe consent, logs in chosen root; isolated synthetic bridge (not live Pro).");
+    return;
+}
 if (args.Length >= 3 && args[1] == "--test-consent-host")
 {
     string fixtureRoot = Path.GetFullPath(args[2]);
@@ -71,6 +95,11 @@ if (args.Contains("--workflow-only"))
     return;
 }
 int passed = 0;
+if (args.Contains("--installation-only"))
+{
+    Console.WriteLine($"Completed: {InstallationChecks.Run()} installation checks passed (isolated files, no Pro registration).");
+    return;
+}
 using var suiteTimeout = new CancellationTokenSource(TimeSpan.FromMinutes(3));
 var stderr = new ConcurrentQueue<string>();
 void Require(bool value, string message) { if (!value) throw new InvalidOperationException(message); }
@@ -310,6 +339,7 @@ passed += await LayoutChecks.RunAsync(serverPath);
 passed += await HardeningChecks.RunAsync();
 passed += WorkspaceSettingsChecks.Run();
 passed += WorkspaceSettingsPreview.Run();
+passed += InstallationChecks.Run();
 passed += await ReliabilityChecks.RunAsync(serverPath);
 passed += await WorkflowChecks.RunAsync(serverPath);
 passed += await CartographyHardeningChecks.RunAsync(serverPath);

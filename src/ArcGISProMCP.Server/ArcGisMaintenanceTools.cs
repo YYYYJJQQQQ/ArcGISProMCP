@@ -12,7 +12,7 @@ namespace ArcGISProMCP.Server;
 [McpServerToolType]
 public sealed class ArcGisMaintenanceTools(BridgeClient bridge)
 {
-    private static string Root => typeof(ArcGisMaintenanceTools).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private static string Root => ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisMaintenanceTools).Assembly);
     [McpServerTool(Name = "inspect_project_state", ReadOnly = true, Destructive = false, Idempotent = false, OpenWorld = false)]
     [Description("Snapshot live project/maps/layers/layouts CIM plus saved APRX archive without GIS edits. compareTo snapshotId returns categorized differences. Default compact summary/path; includeDetails capped at 1 MiB. Requires Add-in1.7.0.")]
     public async Task<CallToolResult> Inspect(string projectPath, string? compareTo = null, bool includeDetails = false, int? processId = null, CancellationToken cancellationToken = default)

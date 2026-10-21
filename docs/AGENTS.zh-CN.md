@@ -1,6 +1,6 @@
 # 各类 Agent 安装和使用
 
-先完成 [本机安装](INSTALL.zh-CN.md)。以下假设源码在 `D:\Tools\ArcGISProMCP`；请替换成你自己的绝对路径。只合并新增arcgispro条目，不覆盖其他MCP配置。该服务是本地stdio，不能填写HTTP网址，也无需npx/uvx。云端网页Agent不能直接连接你电脑的命名管道；WSL/远程环境不在本次支持验证范围内。
+先完成 [下载安装](INSTALL.zh-CN.md)。安装目录client-config中已生成填好真实路径的示例，优先使用它们；以下D盘路径仅为说明。源码开发构建则使用artifacts/publish/staging下的服务。以下假设源码在 `D:\Tools\ArcGISProMCP`；请替换成你自己的绝对路径。只合并新增arcgispro条目，不覆盖其他MCP配置。该服务是本地stdio，不能填写HTTP网址，也无需npx/uvx。云端网页Agent不能直接连接你电脑的命名管道；WSL/远程环境不在本次支持验证范围内。
 
 ## Codex CLI / 桌面 / IDE
 
@@ -8,7 +8,7 @@
 
 ```toml
 [mcp_servers.arcgispro]
-command = 'D:\Tools\ArcGISProMCP\artifacts\publish\staging\ArcGISProMCP.Server\ArcGISProMCP.Server.exe'
+command = 'D:\Tools\ArcGISProMCP\server\ArcGISProMCP.Server.exe'
 args = []
 startup_timeout_sec = 20
 tool_timeout_sec = 150
@@ -21,7 +21,7 @@ tool_timeout_sec = 150
 在Windows原生终端运行：
 
 ```powershell
-claude mcp add --transport stdio --scope user arcgispro -- 'D:\Tools\ArcGISProMCP\artifacts\publish\staging\ArcGISProMCP.Server\ArcGISProMCP.Server.exe'
+claude mcp add --transport stdio --scope user arcgispro -- 'D:\Tools\ArcGISProMCP\server\ArcGISProMCP.Server.exe'
 ```
 
 用 `/mcp` 检查连接。项目级配置可以合并examples/clients/claude-code.json到.mcp.json，避免同时注册同名重复服务。[官方说明](https://code.claude.com/docs/en/mcp)。

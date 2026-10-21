@@ -1,5 +1,7 @@
 # Agent setup and use
 
+Prefer the generated **client-config** files in your chosen installation: their actual Server path is already filled in. The D: paths below are examples. Source builds use artifacts/publish/staging instead of server.
+
 Complete [local installation](INSTALL.en.md) first. Replace `D:\Tools\ArcGISProMCP` with your own permanent checkout. Merge only the new entry and preserve other MCP servers. This is a local stdio executable, not an HTTP endpoint or an npx/uvx package. A browser/cloud agent cannot directly access your Windows named pipe; WSL/remote execution is outside current validation.
 
 ## Codex CLI / desktop / IDE
@@ -8,7 +10,7 @@ Merge [examples/clients/codex.toml](../examples/clients/codex.toml) into the con
 
 ```toml
 [mcp_servers.arcgispro]
-command = 'D:\Tools\ArcGISProMCP\artifacts\publish\staging\ArcGISProMCP.Server\ArcGISProMCP.Server.exe'
+command = 'D:\Tools\ArcGISProMCP\server\ArcGISProMCP.Server.exe'
 args = []
 startup_timeout_sec = 20
 tool_timeout_sec = 150
@@ -21,7 +23,7 @@ Reload the connection, inspect the tool list, then call health_check. Configurat
 In a native Windows terminal:
 
 ```powershell
-claude mcp add --transport stdio --scope user arcgispro -- 'D:\Tools\ArcGISProMCP\artifacts\publish\staging\ArcGISProMCP.Server\ArcGISProMCP.Server.exe'
+claude mcp add --transport stdio --scope user arcgispro -- 'D:\Tools\ArcGISProMCP\server\ArcGISProMCP.Server.exe'
 ```
 
 Inspect `/mcp`. For project configuration, merge examples/clients/claude-code.json into .mcp.json instead; avoid duplicate registrations. [Official guide](https://code.claude.com/docs/en/mcp).

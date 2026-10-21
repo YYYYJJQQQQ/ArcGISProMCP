@@ -14,8 +14,7 @@ internal sealed class WorkspaceSettingsButton : Button
     {
         try
         {
-            string root = typeof(WorkspaceSettingsButton).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-                .Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value;
+            string root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(WorkspaceSettingsButton).Assembly);
             new WorkspaceSettingsWindow(root) { Owner = FrameworkApplication.Current.MainWindow }.ShowDialog();
         }
         catch (Exception ex) { MessageBox.Show("无法打开目录授权设置：" + ex.Message, "ArcGIS Pro MCP"); }

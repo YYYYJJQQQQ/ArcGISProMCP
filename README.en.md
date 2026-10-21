@@ -12,19 +12,17 @@ A local MCP bridge that lets AI agents work with **ArcGIS Pro 3.7**. Built with 
 - Controlled save/save-as and project switching, verified backups and explicit human or user-configured standing consent. No background autosave.
 - Bounded Pro UI inspection/navigation and thematic map styling. Actual exported maps still require visual review.
 
-## Quick start
+## Download and install
 
-**v1.8.3-preview.2 is a source preview release**, with add-in 1.8.3, server 0.8.0 and Python runtime 1.7.0. It is not a portable binary installer. Bring a licensed ArcGIS Pro installation and SDK; Esri software and personal GIS data are not distributed.
+**End users do not need to compile.** Setup includes add-in **1.9.0**, Server **0.9.0** and Python **1.7.0**. Bring licensed ArcGIS Pro3.7 and its .NET10 Desktop Runtime prerequisite; no Esri SDK or Visual Studio is needed to install.
 
-```powershell
-git clone https://github.com/YYYYJJQQQQ/ArcGISProMCP.git
-cd ArcGISProMCP
-.\scripts\build.ps1 -Configuration Release -Mode PackageOnly -RunTests -Publish -StagePublish -ArcGISProInstallDir 'C:\Program Files\ArcGIS\Pro'
-```
+1. [Download Windows x64 Setup.exe](https://github.com/YYYYJJQQQQ/ArcGISProMCP/releases/download/v1.9.0-preview.1/ArcGISProMCP-1.9.0-preview.1-Setup.exe).
+2. Run it, choose a new directory and click Install.
+3. Save work, close Pro, click Install Pro add-in and complete the official dialog.
+4. Open Pro → Add-In → ArcGIS Pro MCP → Start connection; set workspace permissions.
+5. Merge your Agent entry from **client-config** in the installation folder, reload and call health_check.
 
-Close Pro normally and install `artifacts/bin/ArcGISProMCP.AddIn/Release/net10.0-windows/ArcGISProMCP.AddIn.esriAddinX`. Reopen Pro, choose **Add-In → ArcGIS Pro MCP → Start connection**, register your locally built server with your agent, then call `health_check`. Follow [installation](docs/INSTALL.en.md) and [agent setup](docs/AGENTS.en.md).
-
-**Builds embed the working root. After moving the source folder or changing machines, rebuild and reinstall the matching add-in. Do not reuse a developer-machine binary.** Start with a separate test project; the human grants real data folders afterward.
+Follow the [step-by-step guide](docs/INSTALL.en.md). This is an **installer preview**, pending updated Pro loading and cross-machine acceptance. Setup is unsigned; see installation/validation limitations. Source ZIP is for development, not installation. Earlier source previews remain available.
 
 ## Documentation
 
@@ -33,7 +31,7 @@ Close Pro normally and install `artifacts/bin/ArcGISProMCP.AddIn/Release/net10.0
 - [Generated tool catalog](docs/TOOLS.md), [architecture](docs/ARCHITECTURE.md), [validation and limitations](docs/VALIDATION.md)
 - [Long-term maintenance](docs/MAINTENANCE.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md), [third-party notices](THIRD_PARTY_NOTICES.md)
 
-159 local checks have passed: 18 bridge/package checks and 141 synthetic MCP integration checks. These do not establish arbitrary real GIS correctness. Earlier Pro operations have been tested locally; **the add-in 1.8.3 directory-list fix still needs actual installed-host theme/DPI acceptance**. CI and other-machine validation must be reported separately.
+1.9.0 passed 169 local checks: 18 bridge/package and 151 synthetic MCP integration checks, plus installed-Server checks in two Chinese-path directories. These do not establish arbitrary real GIS correctness. Earlier Pro operations have been tested locally; **the add-in 1.8.3 directory-list fix still needs actual installed-host theme/DPI acceptance**. CI and other-machine validation must be reported separately.
 
 Arbitrary ribbon execution, source deletion, instant forced cancellation and transactional rollback are not supported. Agents may use available file/browser/vision tools for missing capabilities, while preserving permissions and uncertain-write protection. Layout validity is not aesthetic acceptance.
 

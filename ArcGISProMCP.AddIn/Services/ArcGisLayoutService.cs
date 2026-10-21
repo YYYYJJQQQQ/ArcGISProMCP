@@ -17,7 +17,7 @@ namespace ArcGISProMCP.AddIn.Services;
 
 internal sealed class ArcGisLayoutService : IDisposable
 {
-    private readonly string _root = typeof(ArcGisLayoutService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private readonly string _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisLayoutService).Assembly);
     private readonly MutationJournal _journal = new();
     private readonly LayoutJobs _jobs = new();
 

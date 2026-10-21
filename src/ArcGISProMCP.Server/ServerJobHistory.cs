@@ -7,7 +7,7 @@ internal static class ServerJobHistory
 {
     internal static object Read(string kind, string id)
     {
-        string root = typeof(ServerJobHistory).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+        string root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ServerJobHistory).Assembly);
         string category = kind == "analysis" ? "analysis" : "layouts";
         return new JobHistory(new RuntimeStorage(root).Logs(category), kind, value => new RuntimeStorage(root).HistoryRoot(category, value)).Get(id);
     }

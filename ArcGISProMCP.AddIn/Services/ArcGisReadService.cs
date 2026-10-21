@@ -27,8 +27,7 @@ namespace ArcGISProMCP.AddIn.Services
                 var project = Project.Current;
                 if (project != null)
                 {
-                    string root = typeof(ArcGisReadService).Assembly.GetCustomAttributes<System.Reflection.AssemblyMetadataAttribute>()
-                        .Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value;
+                    string root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisReadService).Assembly);
                     new WorkspaceAccessPolicy(root).Require(project.URI, "read", "project");
                 }
                 if (command == "get_project")

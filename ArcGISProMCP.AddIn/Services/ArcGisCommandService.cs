@@ -28,15 +28,13 @@ internal sealed class ArcGisCommandService : IBridgeCommandHandler, IDisposable
     private readonly ArcGisReadService _reads = new();
     private readonly MutationJournal _journal = new();
     private readonly RemovalAuthorizations _removals = new();
-    private WorkspaceAccessPolicy _access => new(typeof(ArcGisCommandService).Assembly
-        .GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!);
-    private readonly TestProjectPolicy _policy = new(typeof(ArcGisCommandService).Assembly
-        .GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!);
+    private WorkspaceAccessPolicy _access => new(ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisCommandService).Assembly));
+    private readonly TestProjectPolicy _policy = new(ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisCommandService).Assembly));
 
     public Task<object> ExecuteAsync(string command, JsonElement? arguments, CancellationToken token)
     {
         if (ProUiPolicy.Commands.Contains(command)) return _ui.Execute(command, arguments, token);
-        if (command == "inspect_project_state") return ProjectStateService.Inspect(typeof(ArcGisCommandService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!, arguments ?? throw new BridgeException("invalid_arguments", "缺少工程诊断参数。"), token);
+        if (command == "inspect_project_state") return ProjectStateService.Inspect(ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisCommandService).Assembly), arguments ?? throw new BridgeException("invalid_arguments", "缺少工程诊断参数。"), token);
         if (ProjectPreparationCommands.All.Contains(command)) return _preparation.ExecuteAsync(command, arguments, token);
         if (BridgeProtocol.ReadCommands.Contains(command)) return _reads.ExecuteAsync(command, arguments, token);
         if (command is "prepare_project_save" or "project_save") return _projects.ExecuteAsync(command, arguments, token);
@@ -44,7 +42,7 @@ internal sealed class ArcGisCommandService : IBridgeCommandHandler, IDisposable
         if (command is "resume_layout_job" or "map_series_read" or "map_series_edit") return _layouts.ExecuteAsync(command, arguments, token);
         if (command is "runtime_health" or "workspace_access")
         {
-            string root = typeof(ArcGisCommandService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+            string root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisCommandService).Assembly);
             var policy = new WorkspaceAccessPolicy(root);
             string? problem = null;
             try { ReleaseIdentity.VerifyPython(root); } catch (Exception ex) { problem = ex.Message; }

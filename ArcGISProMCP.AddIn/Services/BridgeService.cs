@@ -257,7 +257,7 @@ namespace ArcGISProMCP.AddIn.Services
                 lastError = status.LastError,
                 arcGisProVersion = Environment.ProcessPath is { } executable
                     ? FileVersionInfo.GetVersionInfo(executable).ProductVersion : null,
-                addInVersion = typeof(BridgeService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Any(a => a.Key == "ArcGISMcpWorkspaceRoot")
+                addInVersion = typeof(BridgeService).Assembly.GetName().Name == "ArcGISProMCP.AddIn"
                     ? typeof(BridgeService).Assembly.GetName().Version?.ToString(3) : null,
                 readOnly = _handler == null || !_handler.SupportedCommands.Any(EditCommands.Writes.Contains),
                 writeScope = "user-authorized directories; TestProjects defaults retained; matching projectPath; no source overwrite; explicit project save requires human confirmation and backup",

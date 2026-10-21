@@ -65,7 +65,7 @@ def export(destination):
         target.write_text(text.replace("\r\n", "\n").replace("\n", "\r\n"), encoding="utf-8", newline="")
     for name in [".editorconfig", "ArcGISProMCP.AddIn.slnx", "Directory.Build.props", "nuget.config", "LICENSE"]:
         copy(ROOT / name, name)
-    for folder in ["src", "ArcGISProMCP.AddIn", "python", "skills", "tests/McpIntegration", "tests/BridgeSmoke", "tests/Fixtures", "tools/ArcGISProMCP.Probe"]:
+    for folder in ["src", "ArcGISProMCP.AddIn", "python", "skills", "tests/McpIntegration", "tests/BridgeSmoke", "tests/Fixtures", "tools/ArcGISProMCP.Probe", "tools/ArcGISProMCP.Setup"]:
         for current, dirs, files in os.walk(ROOT / folder, followlinks=False):
             for name in dirs:
                 path = Path(current) / name
@@ -77,7 +77,7 @@ def export(destination):
                 if name in {"launchSettings.json"} or source.suffix in {".pyc", ".pdb", ".dll", ".exe"}:
                     continue
                 copy(source, source.relative_to(ROOT))
-    for name in ["build.ps1", "publish-server.ps1", "audit-dependencies.ps1", "export-open-source.py"]:
+    for name in ["build.ps1", "publish-server.ps1", "audit-dependencies.ps1", "export-open-source.py", "build-installer.ps1", "prepare-installer.py"]:
         copy(ROOT / "scripts" / name, "scripts/" + name)
     root_docs = {"README.md", "README.en.md", "CONTRIBUTING.md", "SECURITY.md", "THIRD_PARTY_NOTICES.md"}
     doc_names = [*sorted(root_docs), "INSTALL.zh-CN.md", "INSTALL.en.md", "AGENTS.zh-CN.md", "AGENTS.en.md", "MAINTENANCE.md", "ARCHITECTURE.md", "VALIDATION.md"]
@@ -86,6 +86,9 @@ def export(destination):
         authoring = ROOT / "docs" / "public" / name
         source = authoring if authoring.exists() else ROOT / relative
         copy(source, relative)
+    license_root = ROOT / "docs/public/licenses" if (ROOT / "docs/public/licenses").exists() else ROOT / "docs/licenses"
+    for source in license_root.glob("*.txt"):
+        copy(source, "docs/licenses/" + source.name)
     for folder in ["Images", "DarkImages"]:
         for size in [16, 32]:
             (destination / "ArcGISProMCP.AddIn" / folder / f"AddInDesktop{size}.png").write_bytes(icon(size))
@@ -100,11 +103,11 @@ def export(destination):
     write("config/workspace-access.json", json.dumps({"schemaVersion": 1, "grants": []}, indent=2) + "\n")
     write("config/project-save.json", json.dumps({"schemaVersion": 1, "allowAutonomousSave": False, "allowAutonomousProjectSwitch": False}, indent=2) + "\n")
     write("config/runtime-storage.json", json.dumps({"schemaVersion": 1, "backupKeepPerProject": 10, "backupMaxBytes": 536870912, "autoPrune": False}, indent=2) + "\n")
-    write(".gitignore", "artifacts/\n**/bin/\n**/obj/\n**/__pycache__/\n.vs/\n.codex/\nTestProjects/\nWorkspaces/\nconfig/workspace-access.json\nconfig/project-save.json\nconfig/runtime-storage.json\n*.user\n*.suo\n.env\n")
+    write(".gitignore", "artifacts/\n**/bin/\n**/obj/\n**/__pycache__/\n.vs/\n.codex/\nTestProjects/\nWorkspaces/\nconfig/workspace-access.json\nconfig/project-save.json\nconfig/runtime-storage.json\n*.user\n*.suo\n.env\ndocs/public/\n")
     for name in ["workspace-access", "project-save", "runtime-storage"]:
         copy(destination / "config" / (name + ".json"), "config/" + name + ".example.json")
     write("AGENTS.md", "# Contributor guidance / 协作约定\n\nRead README and docs/VALIDATION.md first. Keep SDK access inside QueuedTask.Run; only DTOs leave MCT. Preserve MCP names/parameters/protocol v1. Never self-authorize, overwrite raw GIS, replay uncertain writes or replace a running add-in/toolbox. Build/test per INSTALL, record limits, and inspect rendered maps.\n\n先读README与验证状态；沿用线程、权限和接口边界，测试使用独立工程。缺少能力时复用可用客户端工具，不绕过拒绝。所有生成文件保存在本项目artifacts内。\n")
-    exe = r"D:\Tools\ArcGISProMCP\artifacts\publish\staging\ArcGISProMCP.Server\ArcGISProMCP.Server.exe"
+    exe = r"D:\Tools\ArcGISProMCP\server\ArcGISProMCP.Server.exe"
     server = {"command": exe, "args": []}
     for client in ["claude-code", "claude-desktop", "cursor", "gemini"]:
         write("examples/clients/" + client + ".json", json.dumps({"mcpServers": {"arcgispro": server}}, indent=2) + "\n")
@@ -118,7 +121,7 @@ def export(destination):
     if count != 78:
         raise ValueError("Unexpected tool count: " + str(count))
     write("docs/TOOLS.md", "# 工具清单 / Tool catalog\n\nGenerated from tool registrations: 78. Parameters and returned schema are discovered through MCP tools/list; descriptions are not an authorization grant. 参数以实际tools/list为准。\n\n" + "\n".join(groups))
-    write(".github/workflows/ci.yml", "name: Synthetic MCP checks\non:\n  push:\n    branches: [main]\n  pull_request:\npermissions:\n  contents: read\njobs:\n  synthetic:\n    runs-on: windows-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: '10.0.x'\n      - name: Build SDK-free synthetic test host\n        run: dotnet build tests/McpIntegration/McpIntegration.csproj -c Release\n      - name: Run synthetic MCP checks (no Esri host)\n        run: ./artifacts/bin/McpIntegration/Release/net10.0-windows/McpIntegration.exe ./artifacts/bin/ArcGISProMCP.Server/Release/net10.0-windows/ArcGISProMCP.Server.dll\n")
+    write(".github/workflows/ci.yml", "name: Synthetic MCP checks\non:\n  push:\n    branches: [main]\n  pull_request:\npermissions:\n  contents: read\njobs:\n  synthetic:\n    runs-on: windows-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: '10.0.x'\n      - name: Build SDK-free synthetic test host\n        run: dotnet build tests/McpIntegration/McpIntegration.csproj -c Release\n      - name: Compile Windows installer UI (no registration or payload)\n        run: dotnet build tools/ArcGISProMCP.Setup/ArcGISProMCP.Setup.csproj -c Release -p:PublishSingleFile=false\n      - name: Run synthetic MCP checks (no Esri host)\n        run: ./artifacts/bin/McpIntegration/Release/net10.0-windows/McpIntegration.exe ./artifacts/bin/ArcGISProMCP.Server/Release/net10.0-windows/ArcGISProMCP.Server.dll\n")
     # Public source must not contain a developer's real data path or credentials.
     forbidden = [str(Path.home()), *live_paths]
     secrets = re.compile(r"(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)")

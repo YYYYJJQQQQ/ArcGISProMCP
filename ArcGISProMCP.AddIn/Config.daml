@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry ArcGIS.Desktop.Framework.xsd">
 
-  <AddInInfo id="{a95d0781-3951-442b-a3d4-2e31003b1753}" version="1.8.3" desktopVersion="3.7.1901" product="ArcGISPro">
+  <AddInInfo id="{a95d0781-3951-442b-a3d4-2e31003b1753}" version="1.9.0" desktopVersion="3.7.1901" product="ArcGISPro">
     <Name>ArcGISProMCP.AddIn</Name>   
     <Description>ArcGIS Pro MCP：工程、图层、空间分析、地图布局与自动化制图</Description>
     <Image>Images\AddinDesktop32.png</Image>

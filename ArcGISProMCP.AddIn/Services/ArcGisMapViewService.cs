@@ -20,8 +20,7 @@ internal sealed class ArcGisMapViewService
     private sealed record ViewPlan(string ProjectPath, string MapUri, string Name, string ViewJson);
     private readonly SemaphoreSlim _gate = new(1);
     private readonly MutationJournal _journal = new(); // Access only on MCT, like the existing edit journal.
-    private readonly string _root = typeof(ArcGisMapViewService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-        .Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private readonly string _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisMapViewService).Assembly);
 
     internal async Task<object> ActivateAsync(EditArguments args, CancellationToken token)
     {

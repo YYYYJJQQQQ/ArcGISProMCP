@@ -15,5 +15,6 @@
     <Compile Include="..\..\ArcGISProMCP.AddIn\Services\WorkspaceConfigurationStore.cs" Link="WorkspaceConfigurationStore.cs" />
     <Compile Include="..\..\ArcGISProMCP.AddIn\Services\WorkspaceDirectorySettings.cs" Link="WorkspaceDirectorySettings.cs" />
     <Compile Include="..\..\ArcGISProMCP.AddIn\Views\WorkspaceSettingsEditor.cs" Link="WorkspaceSettingsEditor.cs" />
+    <Compile Include="..\..\tools\ArcGISProMCP.Setup\InstallationEngine.cs" Link="InstallationEngine.cs" />
   </ItemGroup>
 </Project>

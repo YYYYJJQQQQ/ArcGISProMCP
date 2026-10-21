@@ -19,7 +19,7 @@ namespace ArcGISProMCP.AddIn.Services;
 
 internal sealed class ProjectPreparationService
 {
-    private readonly string _root = typeof(ProjectPreparationService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private readonly string _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ProjectPreparationService).Assembly);
     private readonly MutationJournal _journal = new();
     private readonly Dictionary<string, ProjectLifecyclePlan> _plans = [];
     private readonly SemaphoreSlim _gate = new(1);

@@ -5,8 +5,8 @@ namespace ArcGISProMCP.Contracts;
 
 public static class ReleaseIdentity
 {
-    public const string AddInVersion = "1.8.3";
-    public const string ServerVersion = "0.8.0";
+    public const string AddInVersion = "1.9.0";
+    public const string ServerVersion = "0.9.0";
     // Candidate runtime is isolated; never replace the running 1.4.3 toolbox.
     public const string PythonRuntimeVersion = "1.7.0";
     public static readonly string[] ReliabilityCommands = ["workspace_access", "prepare_project_save", "project_save", "retry_analysis_job", "resume_layout_job", "map_series_read", "map_series_edit", "runtime_health"];

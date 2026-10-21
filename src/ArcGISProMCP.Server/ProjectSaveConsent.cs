@@ -8,8 +8,7 @@ namespace ArcGISProMCP.Server;
 public sealed class ProjectSaveConsent(string root, bool requireHumanConfirmation = false, bool requireProjectConfirmation = false)
 {
     public ProjectSaveConsent(bool requireHumanConfirmation = false, bool requireProjectConfirmation = false) : this(
-        typeof(ProjectSaveConsent).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-            .Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!, requireHumanConfirmation, requireProjectConfirmation) { }
+        ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ProjectSaveConsent).Assembly), requireHumanConfirmation, requireProjectConfirmation) { }
 
     public bool AllowsAutonomousSave() => !requireHumanConfirmation && Read("allowAutonomousSave", "save_authorization_invalid");
     public bool AllowsAutonomousProjectSwitch() => !requireProjectConfirmation && Read("allowAutonomousProjectSwitch", "project_authorization_invalid", optional: true);

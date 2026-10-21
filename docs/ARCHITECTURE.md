@@ -24,3 +24,7 @@ Humans own grants. Outputs use new paths; APRX saves require authorization, vali
 ServerApplication复用官方注册和启动构建，生产入口仍只按用户配置读取授权；合成测试以DI注入独立授权，不提供生产CLI授权覆盖。测试启动器只接受ArcGISProMCP.Test.*管道及根内独立fixture，不能直接连实际Pro管道。
 
 ServerApplication shares official registration/startup construction. Production consent still comes from user-owned configuration; synthetic tests inject an isolated policy through DI, without adding a production CLI consent override. The test launcher accepts only ArcGISProMCP.Test.* pipes and dedicated fixture roots, not real Pro pipes.
+
+安装版通过组件旁的ArcGISProMCP.runtime.json与运行根ArcGISProMCP.install.json匹配定位；便携构建不含开发者根元数据。绑定失败、目录联接、版本Python哈希不匹配均拒绝；定位不会增加GIS目录授权。正常源码构建保留原根回退。
+
+Installed components locate their root using matching runtime/installation manifests. Portable builds omit developer-root metadata; invalid bindings, reparse points and Python checksum mismatch fail closed. Location is not a workspace grant. Normal source builds retain their original developer fallback.

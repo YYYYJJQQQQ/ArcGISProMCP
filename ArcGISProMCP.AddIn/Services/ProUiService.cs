@@ -23,7 +23,7 @@ namespace ArcGISProMCP.AddIn.Services;
 internal sealed class ProUiService
 {
     private readonly SemaphoreSlim _gate = new(1);
-    private readonly string _root = typeof(ProUiService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private readonly string _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ProUiService).Assembly);
     private async Task CheckProject(string path, bool write)
     {
         await QueuedTask.Run(() =>

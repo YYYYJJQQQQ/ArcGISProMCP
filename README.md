@@ -12,19 +12,17 @@
 - 保存、另存、新建/切换工程受控；独立备份、人工确认或用户主动配置的长期授权，无后台自动保存。
 - 读取部分 Pro 界面状态和受控工具栏导航；专题图视觉样式、实际导出后检查和调整。
 
-## 快速开始
+## 下载与安装
 
-当前公开发行是 **v1.8.3-preview.2 源码预览版**，组件版本 Add-in 1.8.3 / Server 0.8.0 / Python 1.7.0。它不是跨机器免配置二进制安装包。你需要自己的 ArcGIS Pro 授权及 SDK；不包含 Esri 软件或个人 GIS 数据。
+**普通用户无需编译。** 安装包包含Add-in **1.9.0**、Server **0.9.0**和Python **1.7.0**；需要预先安装并激活ArcGIS Pro3.7及其.NET10桌面运行时。无需Esri SDK或Visual Studio。
 
-```powershell
-git clone https://github.com/YYYYJJQQQQ/ArcGISProMCP.git
-cd ArcGISProMCP
-.\scripts\build.ps1 -Configuration Release -Mode PackageOnly -RunTests -Publish -StagePublish -ArcGISProInstallDir 'C:\Program Files\ArcGIS\Pro'
-```
+1. [下载 Windows x64 安装程序](https://github.com/YYYYJJQQQQ/ArcGISProMCP/releases/download/v1.9.0-preview.1/ArcGISProMCP-1.9.0-preview.1-Setup.exe)。
+2. 双击，选择新目录，点击“安装”。
+3. 保存工作并关闭Pro，点击“安装 Pro 插件”，完成官方安装表单。
+4. 打开Pro → 加载项 → ArcGIS Pro MCP → 启动连接，并配置目录授权。
+5. 使用安装目录 **client-config** 中已填好路径的Agent配置，重载连接并调用health_check。
 
-正常关闭 Pro 后安装 `artifacts/bin/ArcGISProMCP.AddIn/Release/net10.0-windows/ArcGISProMCP.AddIn.esriAddinX`。重新打开，在“加载项 → ArcGIS Pro MCP”启动连接。按 [客户端说明](docs/AGENTS.zh-CN.md) 配置你本机生成的 Server.exe，再调用 `health_check`。
-
-**构建产物记录构建时的工作根目录。移动源码目录或换机器后必须重新构建、重新安装匹配插件；不要直接复用开发者的旧安装包。** 初次使用只在独立测试工程验收，然后由本人添加真实工作目录权限。
+详见[逐步安装说明](docs/INSTALL.zh-CN.md)。当前为**安装预览版**；跨机器与新版Pro实际加载验收仍待完成，未签名及其他限制见安装/验证说明。源码ZIP用于开发，不是安装包。旧源码预览发行保留，不再作为普通用户首选。
 
 ## 文档
 
@@ -39,7 +37,7 @@ cd ArcGISProMCP
 
 ## 验证与限制
 
-本地完整回归已有 159 项通过（18 桥接/打包 + 141 MCP 集成）。集成测试使用合成宿主，不等于全部真实 GIS 验收。此前真实 Pro 操作有验证记录；**1.8.3 目录界面修补仍待安装后的真实主题/DPI验收**。首次公开源码还需 GitHub CI 及其他机器验证，不将单机结果说成普遍兼容。
+1.9.0本地完整回归169项通过（18桥接/打包 +151 MCP集成），另完成两个中文安装目录的Server合成桥接验证。集成测试使用合成宿主，不等于全部真实 GIS 验收。此前真实 Pro 操作有验证记录；**1.8.3 目录界面修补仍待安装后的真实主题/DPI验收**。首次公开源码还需 GitHub CI 及其他机器验证，不将单机结果说成普遍兼容。
 
 工具不提供任意工具栏按钮直通、任意数据删除、即时强制取消或自动事务回滚。模型可用自己的文件/浏览器/视觉工具接续缺失能力，但不得绕过权限或重投未知写入。地图布局结构通过不等于视觉质量优秀，需要实际看图。
 

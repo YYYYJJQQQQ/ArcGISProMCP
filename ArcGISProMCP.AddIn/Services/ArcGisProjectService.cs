@@ -15,7 +15,7 @@ namespace ArcGISProMCP.AddIn.Services;
 
 internal sealed class ArcGisProjectService
 {
-    private readonly string _root = typeof(ArcGisProjectService).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+    private readonly string _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisProjectService).Assembly);
     private ProjectSavePolicy? _policy;
     internal async Task<object> ExecuteAsync(string command, JsonElement? arguments, CancellationToken token)
     {

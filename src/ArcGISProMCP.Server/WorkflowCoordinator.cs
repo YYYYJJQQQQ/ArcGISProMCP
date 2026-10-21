@@ -20,7 +20,7 @@ public sealed class WorkflowCoordinator : IDisposable
     public WorkflowCoordinator(BridgeClient bridge, ILoggerFactory logging)
     {
         _bridge = bridge; _catalog = new(bridge, logging);
-        _root = typeof(WorkflowCoordinator).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!;
+        _root = ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(WorkflowCoordinator).Assembly);
         _logs = new RuntimeStorage(_root).Logs("workflows"); _history = new(_logs, "workflow", id => new RuntimeStorage(_root).HistoryRoot("workflows", id));
         _jobs = new(r => r.Plan.WorkflowId, _ => "workflow", r => r.Plan.Steps.Where(s => r.Seeds?.Any(x => x.Id == s.Id) != true)
             .SelectMany(s => _catalog.OutputPaths(s)).ToArray(), r => _catalog.Validate(r.Plan), "workflow", _logs);

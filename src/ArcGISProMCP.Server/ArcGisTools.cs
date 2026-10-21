@@ -41,7 +41,7 @@ public sealed class ArcGisTools(BridgeClient bridge, ILogger<ArcGisTools> logger
             try { projectSwitchPolicy = consent.ProjectSwitchStatus(); }
             catch (BridgeException ex) { projectSwitchPolicy = new { autonomousSwitchAllowed = false, error = new BridgeError(ex.Code, ex.Message) }; }
             object storagePolicy;
-            try { var storage = new RuntimeStorage(typeof(ArcGisTools).Assembly.GetCustomAttributes<System.Reflection.AssemblyMetadataAttribute>().Single(a => a.Key == "ArcGISMcpWorkspaceRoot").Value!); storagePolicy = new { settings = storage.Settings(), logDirectory = storage.Logs("project-saves"), backupDirectory = storage.Backups() }; }
+            try { var storage = new RuntimeStorage(ArcGISProMCP.Contracts.RuntimeLocation.ForAssembly(typeof(ArcGisTools).Assembly)); storagePolicy = new { settings = storage.Settings(), logDirectory = storage.Logs("project-saves"), backupDirectory = storage.Backups() }; }
             catch (BridgeException ex) { storagePolicy = new { error = new BridgeError(ex.Code, ex.Message) }; }
             bool refinementReady = commands.EnumerateArray().Any(c => c.GetString() == "inspect_project_state");
             bool uiReady = ProUiPolicy.Commands.All(required => commands.EnumerateArray().Any(c => c.GetString() == required));

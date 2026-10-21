@@ -15,5 +15,7 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Build SDK-free synthetic test host
         run: dotnet build tests/McpIntegration/McpIntegration.csproj -c Release
+      - name: Compile Windows installer UI (no registration or payload)
+        run: dotnet build tools/ArcGISProMCP.Setup/ArcGISProMCP.Setup.csproj -c Release -p:PublishSingleFile=false
       - name: Run synthetic MCP checks (no Esri host)
         run: ./artifacts/bin/McpIntegration/Release/net10.0-windows/McpIntegration.exe ./artifacts/bin/ArcGISProMCP.Server/Release/net10.0-windows/ArcGISProMCP.Server.dll

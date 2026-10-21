@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "arcgispro": {
-      "command": "D:\\Tools\\ArcGISProMCP\\artifacts\\publish\\staging\\ArcGISProMCP.Server\\ArcGISProMCP.Server.exe",
+      "command": "D:\\Tools\\ArcGISProMCP\\server\\ArcGISProMCP.Server.exe",
       "args": []
     }
   }
