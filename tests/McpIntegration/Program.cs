@@ -83,7 +83,8 @@ async Task<McpClient> Connect(string pipeName, string? protocol = "2025-06-18") 
     await McpClient.CreateAsync(new StdioClientTransport(new()
     {
         Command = "dotnet",
-        Arguments = [serverPath, "--pipe-name", pipeName, "--timeout-ms", "700"],
+        // Shared CI runners need scheduling/JIT headroom for eight queued pipe connections.
+        Arguments = [serverPath, "--pipe-name", pipeName, "--timeout-ms", "5000"],
         WorkingDirectory = Path.GetDirectoryName(serverPath),
         StandardErrorLines = line => stderr.Enqueue(line)
     }), new McpClientOptions { ProtocolVersion = protocol, InitializationTimeout = TimeSpan.FromSeconds(10) },

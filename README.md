@@ -14,7 +14,7 @@
 
 ## 快速开始
 
-当前公开发行是 **v1.8.3-preview.1 源码预览版**，组件版本 Add-in 1.8.3 / Server 0.8.0 / Python 1.7.0。它不是跨机器免配置二进制安装包。你需要自己的 ArcGIS Pro 授权及 SDK；不包含 Esri 软件或个人 GIS 数据。
+当前公开发行是 **v1.8.3-preview.2 源码预览版**，组件版本 Add-in 1.8.3 / Server 0.8.0 / Python 1.7.0。它不是跨机器免配置二进制安装包。你需要自己的 ArcGIS Pro 授权及 SDK；不包含 Esri 软件或个人 GIS 数据。
 
 ```powershell
 git clone https://github.com/YYYYJJQQQQ/ArcGISProMCP.git

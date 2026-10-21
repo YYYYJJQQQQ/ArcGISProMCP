@@ -14,7 +14,7 @@ A local MCP bridge that lets AI agents work with **ArcGIS Pro 3.7**. Built with 
 
 ## Quick start
 
-**v1.8.3-preview.1 is a source preview release**, with add-in 1.8.3, server 0.8.0 and Python runtime 1.7.0. It is not a portable binary installer. Bring a licensed ArcGIS Pro installation and SDK; Esri software and personal GIS data are not distributed.
+**v1.8.3-preview.2 is a source preview release**, with add-in 1.8.3, server 0.8.0 and Python runtime 1.7.0. It is not a portable binary installer. Bring a licensed ArcGIS Pro installation and SDK; Esri software and personal GIS data are not distributed.
 
 ```powershell
 git clone https://github.com/YYYYJJQQQQ/ArcGISProMCP.git
