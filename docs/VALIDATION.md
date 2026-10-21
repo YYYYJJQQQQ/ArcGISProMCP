@@ -15,3 +15,7 @@ Public Windows CI builds the Server and runs synthetic MCPIntegration checks. It
 首次公开副本测试暴露旧测试依赖开发者的长期保存/切换授权；已经将这两类模拟测试改为独立fixture和共享Server注册，公开默认仍关闭，不用放宽发布配置来通过测试。原失败及修复后的验证在发行说明区分；这不是替使用者授权。
 
 The first public-copy run exposed old tests depending on developer standing save/switch consent. These tests now use isolated fixtures and shared server registration, keeping public defaults closed. Release notes distinguish the failed attempt from subsequent validation; tests never grant permissions for an end user's GIS project.
+
+托管CI还暴露了旧测试700ms预算过紧；放宽有界测试预算后发现取消测试原先会把短超时当作收到取消。现改为发送明确notifications/cancelled并核对模拟后台在deadline前取消。仅停止客户端等待不等于服务端/真实GP已停止；实际长任务仍用cancel_analysis_job/cancel_layout_job/cancel_workflow并查询终态。修补不提高生产超时、不虚构即时取消。
+
+Hosted CI exposed an overly tight 700ms fixture budget. Increasing the bounded test allowance revealed that the old cancellation check could pass due to the short deadline. It now sends notifications/cancelled explicitly and observes fixture cancellation before the deadline. Ending a client's wait is not proof that server/GP work stopped. Real background work still uses explicit cancellation tools and terminal queries; production timeout/cancellation claims are not broadened.

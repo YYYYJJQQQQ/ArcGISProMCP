@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.IO.Pipes;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using ArcGISProMCP.AddIn.Services;
 using ArcGISProMCP.Contracts;
 using ArcGISProMCP.Server;
@@ -194,16 +195,19 @@ await Check("concurrent MCP requests are correlated correctly", async () =>
 {
     await Task.WhenAll(Enumerable.Range(0, 8).Select(_ => Call(client, "get_current_project")));
 });
-await Check("MCP cancellation disconnects and cancels pending bridge work", async () =>
+await Check("explicit MCP cancellation notification cancels pending bridge work before its deadline", async () =>
 {
     fixture.Block = true;
     using var cancel = new CancellationTokenSource();
-    var blocked = client.CallToolAsync("get_current_project", cancellationToken: cancel.Token);
+    string requestId = "cancel-test-" + Guid.NewGuid().ToString("N");
+    var blocked = client.SendRequestAsync(new JsonRpcRequest { Id = new RequestId(requestId), Method = "tools/call", Params = new JsonObject { ["name"] = "get_current_project" } }, cancel.Token);
     await fixture.BlockingStarted.Task.WaitAsync(TimeSpan.FromSeconds(3));
+    // Local cancellation can stop only the waiting client; send the protocol notification explicitly.
+    await client.SendMessageAsync(new JsonRpcNotification { Method = NotificationMethods.CancelledNotification, Params = new JsonObject { ["requestId"] = requestId, ["reason"] = "synthetic cancellation test" } });
+    await fixture.BlockingCanceled.Task.WaitAsync(TimeSpan.FromSeconds(3));
     cancel.Cancel();
     try { await blocked; throw new Exception("Canceled call completed successfully."); }
     catch (OperationCanceledException) { }
-    await fixture.BlockingCanceled.Task.WaitAsync(TimeSpan.FromSeconds(3));
     fixture.Block = false;
     await Call(client, "get_current_project");
 });
@@ -295,6 +299,11 @@ await Check("shutdown cancels pending SDK work without blocking", async () =>
     try { await call; throw new Exception("Disconnected call succeeded."); }
     catch (BridgeException) { }
 });
+if (args.Contains("--transport-checks-only"))
+{
+    Console.WriteLine($"Completed: {passed} transport checks passed.");
+    return;
+}
 passed += await Phase2Checks.RunAsync(serverPath);
 passed += await AnalysisChecks.RunAsync(serverPath);
 passed += await LayoutChecks.RunAsync(serverPath);
