@@ -31,3 +31,7 @@ The first public-copy run exposed old tests depending on developer standing save
 托管CI还暴露了旧测试700ms预算过紧；放宽有界测试预算后发现取消测试原先会把短超时当作收到取消。现改为发送明确notifications/cancelled并核对模拟后台在deadline前取消。仅停止客户端等待不等于服务端/真实GP已停止；实际长任务仍用cancel_analysis_job/cancel_layout_job/cancel_workflow并查询终态。修补不提高生产超时、不虚构即时取消。
 
 Hosted CI exposed an overly tight 700ms fixture budget. Increasing the bounded test allowance revealed that the old cancellation check could pass due to the short deadline. It now sends notifications/cancelled explicitly and observes fixture cancellation before the deadline. Ending a client's wait is not proof that server/GP work stopped. Real background work still uses explicit cancellation tools and terminal queries; production timeout/cancellation claims are not broadened.
+
+安装版首次托管CI39592026569在既有日志锁测试失败：ThreadPool异步续体延迟超过600ms的实际重试窗口，持锁断言因此看到写任务已结束。测试改用专用writer线程和同步100ms持锁窗口，保留实际Windows文件锁、旧内容保护、成功替换及无遗留文件断言；生产JobHistory重试预算未改。后续CI结果单独记录，不用重跑旧测试的偶然通过掩盖此问题。
+
+The initial installer CI run39592026569 failed in an existing journal-lock test: pool continuations could resume after the real 600ms retry budget. The fixture now uses a dedicated writer thread and synchronous 100ms lock window, retaining lock/content/replacement/pending-file assertions. Production retry timing is unchanged; subsequent CI is reported separately.

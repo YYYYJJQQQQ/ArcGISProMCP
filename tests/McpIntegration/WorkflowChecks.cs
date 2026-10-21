@@ -126,9 +126,12 @@ internal static class WorkflowChecks
             Task writer;
             using (var reader = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                writer = Task.Run(() => { started.SetResult(); JobHistory.AtomicWrite(path, "{\"state\":\"after\"}", 5); });
-                await started.Task;
-                await Task.Delay(150);
+                // Keep this sub-600ms lock window off the shared async pool. Hosted runners
+                // can delay continuations beyond the production retry budget under load.
+                writer = Task.Factory.StartNew(() => { started.SetResult(); JobHistory.AtomicWrite(path, "{\"state\":\"after\"}", 5); },
+                    CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                Require(started.Task.Wait(TimeSpan.FromSeconds(5)), "Journal writer thread did not start.");
+                Thread.Sleep(100);
                 Require(!writer.IsCompleted, "Windows reader lock did not exercise bounded replacement retry.");
                 using var old = JsonDocument.Parse(reader);
                 Require(old.RootElement.GetProperty("state").GetString() == "before", "Failed replacement corrupted the committed journal.");
